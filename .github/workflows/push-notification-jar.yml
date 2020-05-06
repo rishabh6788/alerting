@@ -4,11 +4,9 @@ on:
   push:
     branches: 
       - opendistro-1.6
-
 jobs:
   upload-notification-jar:
     runs-on: ubuntu-16.04
-
     name: Upload Notification Jar to Maven
     steps:
       - name: Checkout Repo
@@ -21,21 +19,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Setup Java
-        uses: actions/setup-java@v1
-        with:
-          java-version: '13'
-
       - name: Upload Notification Jar to Maven
         env:
           passphrase: ${{ secrets.PASSPHRASE }}
         run: |
-          #export GPG_TTY=$(tty)
           cd ..
-          export JAVA13_HOME=$JAVA_HOME
+          wget https://download.java.net/java/GA/jdk13.0.2/d4173c853231432d94f001e99d882ca7/8/GPL/openjdk-13.0.2_linux-x64_bin.tar.gz
+          tar zxf openjdk-13.0.2_linux-x64_bin.tar.gz
+          sudo cp -r jdk-13.0.2/ /opt/
+          export JAVA_HOME=/opt/jdk-13.0.2
+          export JAVA13_HOME=/opt/jdk-13.0.2
           aws s3 cp s3://opendistro-docs/github-actions/pgp-public-key .
           aws s3 cp s3://opendistro-docs/github-actions/pgp-private-key .
-          ls -l
+          
           gpg --import pgp-public-key
           gpg --allow-secret-key-import --import pgp-private-key
 
@@ -43,5 +39,6 @@ jobs:
           aws s3 cp s3://opendistro-docs/github-actions/gradle.properties /home/runner/.gradle/
           
           cd alerting/notification
+          ls -l
           
-          ../gradlew --stacktrace publishShadowPublicationToSonatype-stagingRepository -Dcompiler.java=13 -Dbuild.snapshot=false -Djavax.net.ssl.trustStore=/opt/hostedtoolcache/jdk/13.0.2/x64/lib/security/cacerts
+          ../gradlew publishShadowPublicationToSonatype-stagingRepository -Dcompiler.java=13 -Dbuild.snapshot=false -Djavax.net.ssl.trustStore=/opt/hostedtoolcache/jdk/13.0.2/x64/lib/security/cacerts
