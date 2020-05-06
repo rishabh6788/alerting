@@ -30,8 +30,7 @@ jobs:
         env:
           passphrase: ${{ secrets.PASSPHRASE }}
         run: |
-          GPG_TTY=$(tty)
-          export GPG_TTY
+          export GPG_TTY=$(tty)
           cd ..
           export JAVA13_HOME=$JAVA_HOME
           aws s3 cp s3://opendistro-docs/github-actions/pgp-public-key .
