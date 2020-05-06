@@ -7,7 +7,8 @@ on:
 
 jobs:
   upload-notification-jar:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
+
     name: Upload Notification Jar to Maven
     steps:
       - name: Checkout Repo
