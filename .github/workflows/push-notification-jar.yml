@@ -7,7 +7,7 @@ on:
 
 jobs:
   upload-notification-jar:
-    runs-on: [macos-latest]
+    runs-on: ubuntu-latest
 
     name: Upload Notification Jar to Maven
     steps:
