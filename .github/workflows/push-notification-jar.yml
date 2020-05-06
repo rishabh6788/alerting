@@ -4,6 +4,7 @@ on:
   push:
     branches: 
       - opendistro-1.6
+
 jobs:
   upload-notification-jar:
     runs-on: [ubuntu-16.04]
