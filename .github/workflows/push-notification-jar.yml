@@ -2,8 +2,8 @@ name: Upload Notification Jar to Maven
 
 on:
   push:
-    tags: 
-      - v*
+    branches: 
+      - opendistro-1.6
 jobs:
   upload-notification-jar:
     runs-on: [ubuntu-16.04]
