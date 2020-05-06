@@ -12,7 +12,7 @@ jobs:
     name: Upload Notification Jar to Maven
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
         
       - name: Configure AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
